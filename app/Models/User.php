@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -47,8 +48,19 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * create passport access token
+     */
     public function accessToken() 
     {
         return $this->createToken('accessToken')->accessToken;
+    }
+
+    /**
+     * Relation Sheep between user and todo
+     */
+    public function todos() : HasMany
+    {
+        return $this->hasMany(Todo::class);
     }
 }
